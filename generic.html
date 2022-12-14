@@ -1,0 +1,306 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Generic Page - Massively by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+			<!-- the Leaflet CSS -->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+		<!-- the Leaflet JavaScript library -->
+		<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+		<script src="https://unpkg.com/geojson-vt@3.2.0/geojson-vt.js"></script>
+		<script src="D:\GRAD\FInal\HTML5 UP\leaflet-geojson-vt-master\src\leaflet-geojson-vt.js"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<!-- This is a plugin legend css -->
+		<link rel="stylesheet" href="D:\GRAD\FInal\HTML5 UP\assets\css\leaflet.legend.css" />
+		<script src="D:\GRAD\FInal\HTML5 UP\Source_Control_Parcels.js"></script>
+		<script src="D:\GRAD\FInal\HTML5 UP\KentMajorWaterBodies.js"></script>
+		<script src="D:\GRAD\FInal\HTML5 UP\KentMinorWaterBodies.js"></script>
+		<!--Leaflet Popup -->
+		<script src="https://unpkg.com/leaflet-responsive-popup@1.0.0/leaflet.responsive.popup.js"></script>
+		<link rel="stylesheet" href="https://unpkg.com/leaflet-responsive-popup@1.0.0/leaflet.responsive.popup.css" />
+
+
+		<!--CSS styles-->
+	<style>
+#map{ height: 60% }
+	</style>
+
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Home</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">This is Massively</a></li>
+							<li class="active"><a href="generic.html">Generic Page</a></li>
+							<li><a href="elements.html">Elements Reference</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+							<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">December 12, 2022</span>
+									<h2>Industrial Pollution sources</h2>
+									<div id="mymap" style="height: 75vh"></div>
+		<script type="text/javascript" src="Source_Control_Parcels.js"></script>
+		<script type="text/javascript" src="KentMinorWaterBodies.js"></script>
+		<script type="text/javascript" src="KentMajorWaterBodies.js"></script>
+<!-- <div id='map'></div> -->
+	<!-- code where we build the map and its functionality -->
+	<script>
+		var map = L.map('mymap').setView([47.395375, -122.223393 ], 12);
+		var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+		}).addTo(map);
+
+		L.geoJson(data, {
+			Polylgon: function(feature, latlng){
+        //       			var radiusSize;
+				// var Type = feature.properties.TYPE;
+	      //           		if (TYPE = STREAM, RIVER, HYDRO,CHANNEL) radiusSize = 20;
+				// 	else if (Type= DETENTION, BIOSWALE, BIOFILTRATION, POND) radiusSize = 26;
+	      //           		else if (TYPE = WET/DETENT) radiusSize = 20;
+				// 	else radiusSize = 15;
+			    	var marker = L.Marker(latlng);
+				marker.bindPopup("Site Name: " + feature.properties.SiteName +
+				 "<br>Site Name: " + feature.properties.SiteName +
+				 "address: " + feature.properties.address +
+ 				 "<br>Zoning: " + feature.properties.Classifica +
+				  "<br>< Discharges into Stormwater  =" + feature.properties.MS4_Presen +
+					"Fats, Oil, and Grease trap: " + feature.properties.FOG_HasTra +
+					"No Fats, Oil, and Grease trap: " + feature.properties.FOG_HasNon +
+					 "<br>Food Processing: " + feature.properties.FoodProces +
+					 "industrial: " + feature.properties.Indus2 +
+	 				 "<br>Petrol: " + feature.properties.Petro2);
+				return marker;
+			}
+		}).addTo(map);
+
+		const marker = L.marker([51.5, -0.09]).addTo(map)
+				.bindPopup('<b>Hello world!</b><br />I am a popup.').openPopup();
+
+			const circle = L.circle([47.395375, -122.223393], {
+				color: 'red',
+				fillColor: '#f03',
+				fillOpacity: 0.5,
+				radius: 500
+			}).addTo(map).bindPopup('I am a circle.');
+
+			const polygon = L.polygon([
+				[46.395375, -122.223393],
+				[47.395375, -122.223393],
+				[45.395375, -122.223393]
+			]).addTo(map).bindPopup('I am a polygon.');
+
+
+			const popup = L.popup()
+				.setLatLng([47.395375, -122.223393])
+				.setContent('I am a standalone popup.')
+				.openOn(map);
+
+			function onMapClick(e) {
+				popup
+					.setLatLng(e.latlng)
+					.setContent(`You clicked the map at ${e.latlng.toString()}`)
+					.openOn(map);
+			}
+
+			map.on('click', onMapClick);
+
+		var AssetColors = {
+		            //normal and subtypes (red)
+		            'Classifica': "#e41a1c",
+		            'MS4_Presen': "#e41a1c",
+		            'FOG_HasNon': "#e41a1c",
+		            'Indus2': "#e41a1c",
+								'FOG_HasTra': "#e41a1c",
+ 							 'Petro2': "#e41a1c",
+		        };
+
+						L.geoJson(data1, {
+							interactive: true,
+							style: function(feature) {
+								if (feature.properties.Classifica != null){
+									return {"color": AssetColors[feature.properties.Classifica]};
+								}
+								else {
+									return {"color": "grey"};
+								}
+							}
+						}).addTo(map);
+
+		var options = {
+			  maxZoom: 16,
+			  tolerance: 3,
+			  debug: 0,
+			  style: {
+			    fillColor: "#2986cc",
+			    color: "#43a2ca",
+			  },
+			};
+
+		var vtLayer = L.geoJson.vt(data, options).addTo(map);
+		var vtLayer = L.geoJson.vt(data1, options).addTo(map);
+		var vtLayer = L.geoJson.vt(data2, options).addTo(map);
+
+		var stormwater = L.geoJson(data2, {
+		 pointToLayer: function(feature, latlng){
+ 		 var marker = L.marker(latlng);
+           marker.bindPopup("Type : "+ feature.properties.TAG + "<br>DRAINAGE: " + feature.properties.DRAINAGE );
+             return marker;
+					}
+	}).addTo(map);
+
+
+
+	 </script>
+
+
+
+
+
+
+
+
+
+
+									<p>Aenean ornare velit lacus varius enim ullamcorper proin aliquam<br />
+									facilisis ante sed etiam magna interdum congue. Lorem ipsum dolor<br />
+									amet nullam sed etiam veroeros.</p>
+								</header>
+									 <!-- <div id='map' style='width: 800px; height: 600px;'></div>
+										<script>
+										  mapboxgl.accessToken = 'pk.eyJ1Ijoiam9obmthbWF1IiwiYSI6ImNsYTkxNDBpODAxYmszb250aTM1enNhbXUifQ.yIea6qeBtneyMQlUO8D3zw';
+										  var map = new mapboxgl.Map({
+										    container: 'map',
+										    style: 'mapbox://styles/mapbox/streets-v11'
+										  });
+
+											map.on('load',() => {
+											map.addSource('Source_Control_Parcels_prj',{
+												'type':'geoJson',
+												'data':{
+													"type": "FeatureCollection",
+	  "features": [
+	    {
+	      "type": "Feature",
+	      "id": 1,
+	      "geometry": {
+	        "type": "Polygon",
+
+												}
+
+												}
+											})
+											}
+										</script>  -->
+
+								<!-- <div class="image main"><img src="images/pic01.jpg" alt="" /></div> -->
+								<h3>There are many different best management practices (BMPs) that can be used to control pollution sources. Some of these include: <br></h3>
+
+								<p>1. Reducing the use of toxic chemicals and materials in industrial processes and substituting them with safer alternatives.<br>
+
+								2. Implementing proper waste management and disposal procedures to prevent pollutants from entering the environment.<br>
+
+								3. Planting vegetation and installing green infrastructure, such as green roofs, rain gardens, and permeable pavement, to capture and filter pollutants before they can enter water bodies.<br>
+
+								4. Establishing and enforcing regulations and standards for industrial and municipal discharges to ensure that they are within safe limits.<br>
+
+								5. Providing education and outreach programs to raise awareness about the importance of pollution prevention and encourage individuals and organizations to adopt BMPs.</p>
+							</section>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section>
+							<form method="post" action="#">
+								<div class="fields">
+									<div class="field">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" />
+									</div>
+									<div class="field">
+										<label for="email">Email</label>
+										<input type="text" name="email" id="email" />
+									</div>
+									<div class="field">
+										<label for="message">Message</label>
+										<textarea name="message" id="message" rows="3"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" /></li>
+								</ul>
+							</form>
+						</section>
+						<section class="split contact">
+							<section class="alt">
+								<h3>Address</h3>
+								<p>1234 Somewhere Road #87257<br />
+								Nashville, TN 00000-0000</p>
+							</section>
+							<section>
+								<h3>Phone</h3>
+								<p><a href="#">(000) 000-0000</a></p>
+							</section>
+							<section>
+								<h3>Email</h3>
+								<p><a href="#">info@untitled.tld</a></p>
+							</section>
+							<section>
+								<h3>Social</h3>
+								<ul class="icons alt">
+									<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+									<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+								</ul>
+							</section>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
