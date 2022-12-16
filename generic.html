@@ -6,13 +6,15 @@
 -->
 <html>
 	<head>
-		<title>Generic Page - Massively by HTML5 UP</title>
+		<title>Pollution Sources Map</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 			<!-- the Leaflet CSS -->
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+		<link rel="stylesheet" href="D:\GRAD\FInal\HTML5 UP\assets\css\leaflet.legend.css" />
+		<script src="D:\GRAD\FInal\HTML5 UP\assets\js\leaflet.legend.js"></script>
 		<!-- the Leaflet JavaScript library -->
 		<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 		<script src="https://unpkg.com/geojson-vt@3.2.0/geojson-vt.js"></script>
@@ -47,16 +49,16 @@
 				<!-- Nav -->
 					<nav id="nav">
 						<ul class="links">
-							<li><a href="index.html">This is Massively</a></li>
-							<li class="active"><a href="generic.html">Generic Page</a></li>
-							<li><a href="elements.html">Elements Reference</a></li>
-						</ul>
+							<li><a href="index.html">Home</a></li>
+							<li class="active"><a href="generic.html">Pollution sources map</a></li>
+							<!-- <li><a href="elements.html"> Reference</a></li> -->
+						<!-- </ul>
 						<ul class="icons">
 							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
 							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
 							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
 							<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-						</ul>
+						</ul> -->
 					</nav>
 
 				<!-- Main -->
@@ -79,121 +81,241 @@
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
 		}).addTo(map);
 
-		L.geoJson(data, {
-			Polylgon: function(feature, latlng){
-        //       			var radiusSize;
-				// var Type = feature.properties.TYPE;
-	      //           		if (TYPE = STREAM, RIVER, HYDRO,CHANNEL) radiusSize = 20;
-				// 	else if (Type= DETENTION, BIOSWALE, BIOFILTRATION, POND) radiusSize = 26;
-	      //           		else if (TYPE = WET/DETENT) radiusSize = 20;
-				// 	else radiusSize = 15;
-			    	var marker = L.Marker(latlng);
-				marker.bindPopup("Site Name: " + feature.properties.SiteName +
-				 "<br>Site Name: " + feature.properties.SiteName +
-				 "address: " + feature.properties.address +
- 				 "<br>Zoning: " + feature.properties.Classifica +
-				  "<br>< Discharges into Stormwater  =" + feature.properties.MS4_Presen +
-					"Fats, Oil, and Grease trap: " + feature.properties.FOG_HasTra +
-					"No Fats, Oil, and Grease trap: " + feature.properties.FOG_HasNon +
-					 "<br>Food Processing: " + feature.properties.FoodProces +
-					 "industrial: " + feature.properties.Indus2 +
-	 				 "<br>Petrol: " + feature.properties.Petro2);
-				return marker;
-			}
-		}).addTo(map);
-
-		const marker = L.marker([51.5, -0.09]).addTo(map)
-				.bindPopup('<b>Hello world!</b><br />I am a popup.').openPopup();
-
-			const circle = L.circle([47.395375, -122.223393], {
-				color: 'red',
-				fillColor: '#f03',
-				fillOpacity: 0.5,
-				radius: 500
-			}).addTo(map).bindPopup('I am a circle.');
-
-			const polygon = L.polygon([
-				[46.395375, -122.223393],
-				[47.395375, -122.223393],
-				[45.395375, -122.223393]
-			]).addTo(map).bindPopup('I am a polygon.');
-
-
-			const popup = L.popup()
-				.setLatLng([47.395375, -122.223393])
-				.setContent('I am a standalone popup.')
-				.openOn(map);
-
-			function onMapClick(e) {
-				popup
-					.setLatLng(e.latlng)
-					.setContent(`You clicked the map at ${e.latlng.toString()}`)
-					.openOn(map);
-			}
-
-			map.on('click', onMapClick);
-
-		var AssetColors = {
-		            //normal and subtypes (red)
-		            'Classifica': "#e41a1c",
-		            'MS4_Presen': "#e41a1c",
-		            'FOG_HasNon': "#e41a1c",
-		            'Indus2': "#e41a1c",
-								'FOG_HasTra': "#e41a1c",
- 							 'Petro2': "#e41a1c",
-		        };
-
-						L.geoJson(data1, {
-							interactive: true,
-							style: function(feature) {
-								if (feature.properties.Classifica != null){
-									return {"color": AssetColors[feature.properties.Classifica]};
-								}
-								else {
-									return {"color": "grey"};
-								}
-							}
-						}).addTo(map);
-
 		var options = {
-			  maxZoom: 16,
-			  tolerance: 3,
-			  debug: 0,
-			  style: {
-			    fillColor: "#2986cc",
-			    color: "#43a2ca",
-			  },
+				maxZoom: 17,
+				tolerance: 1,
+				debug: 0,
+				style: {
+					fillColor: "d1e5f0",
+					color: "#17f4e0",
+				},
 			};
 
 		var vtLayer = L.geoJson.vt(data, options).addTo(map);
 		var vtLayer = L.geoJson.vt(data1, options).addTo(map);
 		var vtLayer = L.geoJson.vt(data2, options).addTo(map);
 
-		var stormwater = L.geoJson(data2, {
-		 pointToLayer: function(feature, latlng){
- 		 var marker = L.marker(latlng);
-           marker.bindPopup("Type : "+ feature.properties.TAG + "<br>DRAINAGE: " + feature.properties.DRAINAGE );
-             return marker;
-					}
-	}).addTo(map);
+		// L.geoJson(data, {
+		// 	Polylgon: function(feature, latlng){
+    //     //       			var radiusSize;
+		// 		// var Type = feature.properties.TYPE;
+	  //     //           		if (TYPE = STREAM, RIVER, HYDRO,CHANNEL) radiusSize = 20;
+		// 		// 	else if (Type= DETENTION, BIOSWALE, BIOFILTRATION, POND) radiusSize = 26;
+	  //     //           		else if (TYPE = WET/DETENT) radiusSize = 20;
+		// 		// 	else radiusSize = 15;
+		//
+		//
+		//
+		// 				var marker = L.Marker(latlng);
+		// 		marker.bindPopup("Site Name: " + feature.properties.SiteName +
+		// 		"<br>Zoning: " + feature.properties.Classifica +
+		// 		 "address: " + feature.properties.address +
+ 		// 		 "<br>Metal Manufacture: " + feature.properties.MetalManuf +
+		// 		  "<br>< Discharges into Stormwater " + feature.properties.MS4_Presen +
+		// 			"Fats, Oil, and Grease trap: " + feature.properties.FOG_HasTra +
+		// 			"No Fats, Oil, and Grease trap: " + feature.properties.FOG_HasNon +
+		// 			 "<br>Food Processing: " + feature.properties.FoodProces +
+		// 			 "industrial: " + feature.properties.Indus2 +
+	 	// 			 "<br>Petrol: " + feature.properties.Petro2);
+		// 		return marker;
+		// 	}
+		// }).addTo(map);
+
+		var Petro2 = L.icon({
+	iconUrl: 'Petro.png',
+	iconSize: [512,512]
+});
+
+
+// create the GeoJSON layer and call the styling function with each marker
+var metroLayer = L.geoJSON(data, {
+	Polygon: function (feature, latlng) {
+		return L.marker(latlng, {
+			icon: Petro2
+		});
+		  },
+			filter: function(feature, layer) {
+    if (feature.properties.Petro2 >= 1) return true;
+    else return false;
+  }
+});
+
+		// Set up styles for subway lines
+		function subteStyle(feature) {
+		  return {
+		    "color": feature.properties.Petro2,
+		    "weight": 5
+		  };
+		}
+
+
+		// Create layer and add it to the map
+		var subteLayer = L.geoJSON(data, {
+		  style: subteStyle
+		});
+
+		// Set up styles for subway lines
+		function subteStyle(feature) {
+			var colorToUse;
+			var polygon = feature.properties.Classifica;
+
+			if (polygon === "Commercial") colorToUse = "#d73027";
+			else if (polygon === "Commercial Subunit") colorToUse = "#fc8d59";
+			else if (polygon === "Residential Multi-Family") colorToUse = "#fee08b";
+			else if (polygon === "Public Agency") colorToUse = "#ffffbf";
+			else if (polygon === "City of Kent") colorToUse = "#d9ef8b";
+			else colorToUse = "#f7f7f7";
+
+			return {
+				"color": colorToUse,
+				"weight": 4
+			};
+		}
+
+		// Create layer and add it to the map
+		var subteLayer = L.geoJSON(data, {
+			style: subteStyle
+		}).addTo(map);
+
+		// const legend = L.control.Legend({
+		// 	position: "bottomleft",
+    //         collapsed: false,
+    //         symbolWidth: 24,
+    //         opacity: 1,
+    //         column: 2,
+		// 				legends: [{
+		// 						label: "Commercial",
+    //             type: "circle",
+    //             radius: 6,
+		// 						type: "circle",
+		// 						color: "#d73027"
+		// 					 }, {
+		// 						label: "Commercial Subunit",
+		// 						type: "circle",
+		// 						color: "#fc8d59"
+		// 					},
+		// 					{
+		// 						label: "Residential Multi-Family",
+		// 						type: "circle",
+		// 						color: "#fee08b"
+		// 					},
+		// 					{
+		// 						label: "Public Agency",
+		// 						type: "circle",
+		// 						color: "#ffffbf"
+		// 					},
+		// 					{
+		// 						label: "City of Kent",
+		// 						type: "circle",
+		// 						color: "#d9ef8b"
+		// 					}]
+    //     })
+    //     .addTo(map);
+
+				// var legend = L.control.Legend({
+		    //          position: "bottomleft",
+		    //          collapsed: false,
+		    //          symbolWidth: 24,
+		    //          opacity: 1,
+		    //          column: 2,
+		    //          legends: [{
+		    //              label: "Commercial",
+		    //              type: "polygon",
+		    //              sides: 5,
+		    //              color: "#FF0000",
+		    //              fillColor: "#FF0000",
+		    //              weight: 2
+		    //          }]
+		    //      })
+		    //      .addTo(map);
+
+		// //Fault line legend
+		// var Legend1 = L.control.Legend({
+		// 		    position: "bottomright",
+		// 			title: "Pollution Sources",
+		// 		    legends: [
+		// 					{
+		// 						label: "Normal",
+		// 		        		type: "Polygon",
+		// 		        		color: "#e41a1c",
+		// 						weight: 4
+		// 		    		},
+		// 					{
+		// 						label: "Reverse",
+		// 						type: "Polygon",
+		// 						color: "#377eb8",
+		// 						weight: 4
+		// 					}
+		// 			]
+		// 		}).addTo(mymap);
+		//
+		// //Earthquake legend
+		// var Legend2 = L.control.Legend({
+		// 				position: "bottomleft",
+		// 				title: "River Classification",
+		// 				legends: [
+		// 					{
+		// 					 	label: "Less than 1",
+		// 						type: "circle",
+		// 						radius: 2,
+		// 						color: "black",
+		// 						fill: true,
+		// 						fillOpacity: "0.4"
+		// 					},
+		// 					{
+		// 						label: "Between 1 and 2.5",
+		// 						type: "circle",
+		// 						radius: 4,
+		// 						color: "black",
+		// 						fill: true,
+		// 						fillOpacity: "0.4"
+		// 					}
+		// 			]
+		// 		}).addTo(mymap);
+		// var popup = L.popup()
+		// .setLatLng(lnglat)
+		// .setContent('<p>Hello world!<br />This is a nice popup.</p>')
+		// .openOn(map);
+		// var Colors = {
+		//             //normal and subtypes (red)
+		//             'Classifica': "#e41a1c",
+		//             'MS4_Presen': "#d8b365",
+		//             'FOG_HasNon': "#fbb4ae",
+		//             'Indus2': "#7570b3",
+		// 						'FOG_HasTra': "#ccebc5",
+ 		// 					 'Petro2': "#d95f02",
+		//         };
+		//
+		// 				L.geoJson(data1, {
+		// 					interactive: true,
+		// 					style: function(feature) {
+		// 						if (feature.properties.SiteName != null){
+		// 							return {"color": Colors[feature.properties.Indus2]};
+		// 						}
+		// 						else {
+		// 							return {"color": "grey"};
+		// 						}
+		// 					}
+		// 				}).addTo(map);
+
+
+
+		var MajorWB = L.geoJson(data2, {
+					interactive: true,
+				 }).bindPopup(function (layer) {
+				     return layer.feature.properties.Name;
+				 }).addTo(map);
+
 
 
 
 	 </script>
+	 <p>
+		 The data above represents Minor and Major water bodies in the City of Kent, Wa.
+	 It also includes pollution control sources in the city. Each polygon in the Pollution control source layer contains data on what type of chemicals are emitted from each site and whether the site has a connection to the city's storm drainage systems. Pollution source layer is visualized using Zoning of the site. The different type of pollution contributor are: Commercial, Commercial Subunit, Residential Multi-Family, Public Agency and City of Kent.
 
-
-
-
-
-
-
-
-
-
-									<p>Aenean ornare velit lacus varius enim ullamcorper proin aliquam<br />
-									facilisis ante sed etiam magna interdum congue. Lorem ipsum dolor<br />
-									amet nullam sed etiam veroeros.</p>
-								</header>
+ </p>
+		</header>
 									 <!-- <div id='map' style='width: 800px; height: 600px;'></div>
 										<script>
 										  mapboxgl.accessToken = 'pk.eyJ1Ijoiam9obmthbWF1IiwiYSI6ImNsYTkxNDBpODAxYmszb250aTM1enNhbXUifQ.yIea6qeBtneyMQlUO8D3zw';
@@ -237,54 +359,7 @@
 
 					</div>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<section>
-							<form method="post" action="#">
-								<div class="fields">
-									<div class="field">
-										<label for="name">Name</label>
-										<input type="text" name="name" id="name" />
-									</div>
-									<div class="field">
-										<label for="email">Email</label>
-										<input type="text" name="email" id="email" />
-									</div>
-									<div class="field">
-										<label for="message">Message</label>
-										<textarea name="message" id="message" rows="3"></textarea>
-									</div>
-								</div>
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" /></li>
-								</ul>
-							</form>
-						</section>
-						<section class="split contact">
-							<section class="alt">
-								<h3>Address</h3>
-								<p>1234 Somewhere Road #87257<br />
-								Nashville, TN 00000-0000</p>
-							</section>
-							<section>
-								<h3>Phone</h3>
-								<p><a href="#">(000) 000-0000</a></p>
-							</section>
-							<section>
-								<h3>Email</h3>
-								<p><a href="#">info@untitled.tld</a></p>
-							</section>
-							<section>
-								<h3>Social</h3>
-								<ul class="icons alt">
-									<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-								</ul>
-							</section>
-						</section>
-					</footer>
+
 
 				<!-- Copyright -->
 					<div id="copyright">
