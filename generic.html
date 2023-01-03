@@ -172,10 +172,32 @@ var metroLayer = L.geoJSON(data, {
 				"weight": 2
 			};
 		}
+		//Click event pop up
+		function whenClicked(e) {
+		// e = event
+		// window.confirm(coords); 
+		// You can make your ajax call declaration here
+		//$.ajax(... 
+		}
+		coords = [];
+		function onEachFeature(feature, layer) {
+		
+			//bind click
+		layer.on({
+			click: whenClicked
+		});
+		popupOptions = {maxWidth: 200};
+		console.log(layer)
+		layer.bindPopup(feature.properties.TAG)
+		.openPopup();
 
+            
+		}
+       
 		// Create layer and add it to the map
 		var subteLayer = L.geoJSON(data, {
-			style: subteStyle
+			style: subteStyle,
+			onEachFeature: onEachFeature
 		}).addTo(map);
 
 		// const legend = L.control.Legend({
@@ -286,7 +308,7 @@ var metroLayer = L.geoJSON(data, {
 		// 						'FOG_HasTra': "#ccebc5",
  		// 					 'Petro2': "#d95f02",
 		//         };
-		//
+		
 		// 				L.geoJson(data1, {
 		// 					interactive: true,
 		// 					style: function(feature) {
