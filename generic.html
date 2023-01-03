@@ -13,18 +13,18 @@
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 			<!-- the Leaflet CSS -->
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-		<link rel="stylesheet" href="D:\GRAD\FInal\HTML5 UP\assets\css\leaflet.legend.css" />
-		<script src="D:\GRAD\FInal\HTML5 UP\assets\js\leaflet.legend.js"></script>
+		<link rel="stylesheet" href="assets\css\leaflet.legend.css" />
+		<script src="assets\js\leaflet.legend.js"></script>
 		<!-- the Leaflet JavaScript library -->
 		<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 		<script src="https://unpkg.com/geojson-vt@3.2.0/geojson-vt.js"></script>
-		<script src="D:\GRAD\FInal\HTML5 UP\leaflet-geojson-vt-master\src\leaflet-geojson-vt.js"></script>
+		<script src="leaflet-geojson-vt-master\src\leaflet-geojson-vt.js"></script>
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<!-- This is a plugin legend css -->
-		<link rel="stylesheet" href="D:\GRAD\FInal\HTML5 UP\assets\css\leaflet.legend.css" />
-		<script src="D:\GRAD\FInal\HTML5 UP\Source_Control_Parcels.js"></script>
-		<script src="D:\GRAD\FInal\HTML5 UP\KentMajorWaterBodies.js"></script>
-		<script src="D:\GRAD\FInal\HTML5 UP\KentMinorWaterBodies.js"></script>
+		<link rel="stylesheet" href="assets\css\leaflet.legend.css" />
+		<script src="Source_Control_Parcels.js"></script>
+		<script src="KentMajorWaterBodies.js"></script>
+		<script src="KentMinorWaterBodies.js"></script>
 		<!--Leaflet Popup -->
 		<script src="https://unpkg.com/leaflet-responsive-popup@1.0.0/leaflet.responsive.popup.js"></script>
 		<link rel="stylesheet" href="https://unpkg.com/leaflet-responsive-popup@1.0.0/leaflet.responsive.popup.css" />
@@ -73,7 +73,8 @@
 		<script type="text/javascript" src="Source_Control_Parcels.js"></script>
 		<script type="text/javascript" src="KentMinorWaterBodies.js"></script>
 		<script type="text/javascript" src="KentMajorWaterBodies.js"></script>
-<!-- <div id='map'></div> -->
+
+<div id='map'></div>
 	<!-- code where we build the map and its functionality -->
 	<script>
 		var map = L.map('mymap').setView([47.395375, -122.223393 ], 12);
@@ -130,12 +131,12 @@
 // create the GeoJSON layer and call the styling function with each marker
 var metroLayer = L.geoJSON(data, {
 	Polygon: function (feature, latlng) {
-		return L.marker(latlng, {
+		return L.icon(latlng, {
 			icon: Petro2
 		});
 		  },
 			filter: function(feature, layer) {
-    if (feature.properties.Petro2 >= 1) return true;
+    if (feature.properties.Petro >= 1) return true;
     else return false;
   }
 });
@@ -144,7 +145,7 @@ var metroLayer = L.geoJSON(data, {
 		function subteStyle(feature) {
 		  return {
 		    "color": feature.properties.Petro2,
-		    "weight": 5
+		    "weight": 2
 		  };
 		}
 
@@ -168,7 +169,7 @@ var metroLayer = L.geoJSON(data, {
 
 			return {
 				"color": colorToUse,
-				"weight": 4
+				"weight": 2
 			};
 		}
 
